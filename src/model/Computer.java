@@ -42,6 +42,10 @@ public class Computer
         this.cpu = cpu;
         this.gpu = gpu;
     }
+    public Computer(String row) {
+        //TODO Auto-generated constructor stub
+    }
+
     public Integer getId() {
         return id;
     }
