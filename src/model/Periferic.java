@@ -1,17 +1,46 @@
 package model;
 
+import java.util.HashSet;
+
 public class Periferic 
 {
     //SCOPE DI CLASSE   (STATIC)
     //Proprietà
-
+    private static HashSet<String> VALIDTYPES = new HashSet<>();
     //Metodi
+    private static void exit()
+    {
+        System.out.println("Periferica non valida, termino programma");
+        System.exit(-1);
+    }
 
+
+    //BLOCCO DI INIZIALIZZAZIONE STATIC
+    //un blocco di codice che viene eseguito alla CREAZIONE della CLASSE
+
+    //quando facciamo partire un progetto
+    //prima di eseguire la prima riga del main
+    //Java crea le CLASSI
+    //"COSTRUTTORE" per la Classe
+    //lo utilizziamo per dare valori alle proprietà STATIC
+    static
+    {
+        VALIDTYPES.add("monitor");
+        VALIDTYPES.add("keyboard");
+        VALIDTYPES.add("mouse");
+        VALIDTYPES.add("headset");
+        VALIDTYPES.add("controller");
+    }
 
     //SCOPE DI OGGETTO
     //Proprietà
     private Integer id,price;
     private String type,model;
+
+    //RIFERIMENTO AL PADRE, serve a JAVA
+    private Computer computer;
+    //CHIAVE ESTERNA, serve al db
+    private Integer computer_id;
 
     //Metodi
     //COSTRUTTORI
@@ -26,6 +55,9 @@ public class Periferic
         this.price = price;
         this.type = type;
         this.model = model;
+
+        if(!isValid())
+            exit();
     }
 
 
@@ -34,6 +66,8 @@ public class Periferic
         this.price = price;
         this.type = type;
         this.model = model;
+        if(!isValid())
+            exit();
     }
 
     public Periferic(String csv) {
@@ -42,6 +76,8 @@ public class Periferic
         this.price = Integer.parseInt(parts[1]);;
         this.type = parts[2];
         this.model = parts[3];
+        if(!isValid())
+            exit();
     }
 
     //Metodi ACCESSORI
@@ -52,6 +88,8 @@ public class Periferic
 
     public void setId(Integer id) {
         this.id = id;
+        if(!hasValidId())
+            exit();
     }
 
     public Integer getPrice() {
@@ -60,6 +98,8 @@ public class Periferic
 
     public void setPrice(Integer price) {
         this.price = price;
+        if(!hasValidPrice())
+            exit();
     }
 
     public String getType() {
@@ -68,17 +108,52 @@ public class Periferic
 
     public void setType(String type) {
         this.type = type;
+        if(!hasValidType())
+            exit();
     }
 
     public String getModel() {
         return model;
     }
 
+    //this è l'oggetto su cui il metodo viene invocato
+    //this.model è LA PROPRIETÀ model dell'oggetto
     public void setModel(String model) {
         this.model = model;
+        if(!hasValidModel())
+            exit();
+    }
+
+    
+
+    public Computer getComputer() 
+    {
+        return computer;
+    }
+
+    //VOGLIAMO IMPOSTI ANCHE LA CHIAVE ESTERNA
+    public void setComputer(Computer computer) 
+    {
+        this.computer       = computer;
+        this.computer_id    = computer.getId();
+    }
+
+    public Integer getComputer_id() 
+    {
+        return computer_id;
+    }
+
+    public void setComputer_id(Integer computer_id) 
+    {
+        this.computer_id = computer_id;
     }
 
     //OTHER
+    public boolean isValid()
+    {
+        return hasValidId() && hasValidPrice() && hasValidModel() && hasValidType();
+    }
+
     public boolean hasValidId()
     {
         return id==null || id>0;
@@ -94,5 +169,10 @@ public class Periferic
         return model!=null && !model.isBlank();
     }
 
-
+    //I VALORI DI TYPE ACCETTABILI sono solo:
+    //keyboard, mouse, monitor, headset, controller
+    public boolean hasValidType()
+    {
+        return type!=null  && VALIDTYPES.contains(type);
+    }
 }
