@@ -175,4 +175,28 @@ public class Periferic
     {
         return type!=null  && VALIDTYPES.contains(type);
     }
+
+    //generazione query
+    public String writeInsertQuery()
+    {
+        return  "INSERT INTO periferics (price,type,model) VALUES ([price],'[type]','[model]')"
+                .replace("[price]", price+"")// "INSERT INTO periferics (price,type,model) VALUES (10,'[type]','[model]')"
+                .replace("[type]", type)// "INSERT INTO periferics (price,type,model) VALUES (10,'mouse','[model]')"
+                .replace("[model]",model);// "INSERT INTO periferics (price,type,model) VALUES (10,'mouse','trust classico')"
+    }
+
+    public String writeUpdateQuery()
+    {
+        return  "UPDATE periferics set price=[price],type= '[type]',model='[model]' WHERE id=[id])"
+                .replace("[price]", price+"")
+                .replace("[type]", type)
+                .replace("[model]",model)
+                .replace("[id]",id+"");
+    }
+
+    public String writeDeleteQuery()
+    {
+        return  "DELETE FROM periferics WHERE id="+id;
+    }
+
 }

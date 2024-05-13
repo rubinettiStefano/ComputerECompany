@@ -9,6 +9,11 @@ public class Test
         Periferic p = new Periferic();    
 
         p.setModel("LG");
+        p.writeInsertQuery();
+        
+        Computer c = new Computer();
+
+        c.addPeriferic(p);
         //riga 9 -> invoco il metodo setModel di p
         //chi è this  -> 
         //p, per l'esecuzione del metodo setModel
@@ -55,5 +60,8 @@ public class Test
         //contains restituisce TRUE se l'oggetto è già presente nel SET
         //FALSE se non lo è
         System.out.println("La parola è vincente: "+ paroleVincenti.contains(parolaInserita));
+
+
+        
     }
 }
