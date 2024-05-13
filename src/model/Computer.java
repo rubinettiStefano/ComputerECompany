@@ -86,6 +86,7 @@ public class Computer
     }
 
     
+    
     private Integer getTotalPerifericsPrice()
     {
         Integer res = 0;
@@ -119,6 +120,14 @@ public class Computer
             perifericsTypes.add(p.getType());
 
         return perifericsTypes.contains("keyboard") && perifericsTypes.contains("mouse") && perifericsTypes.contains("monitor");
+    }
+
+    public ArrayList<Periferic> getPeriferics() {
+        return periferics;
+    }
+
+    public void setPeriferics(ArrayList<Periferic> periferics) {
+        this.periferics = periferics;
     }
 
     
