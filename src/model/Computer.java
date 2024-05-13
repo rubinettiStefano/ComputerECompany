@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Computer 
 {
@@ -85,6 +86,40 @@ public class Computer
     }
 
     
+    private Integer getTotalPerifericsPrice()
+    {
+        Integer res = 0;
+
+        for(Periferic p : periferics)
+            res+=p.getPrice();
+
+        return res;
+    }
+
+    public Integer getTotalPrice()
+    {
+        return getTotalPerifericsPrice()+price;
+    }
+
+    /**
+     * Un computer è utilizzabile quando ha come periferiche almeno una keyboard, un mouse e un monitor
+     * @return
+     */
+    public boolean isUsable()
+    {
+        //SET                (NON C'ENTRA NULLA!!11!!!! con i SETTER)
+        // INSIEME                                             tanti elementi
+        // di OGGETTI dello stesso tipo                        no VETTORE di String,  Periferiche, solo di un tipo
+        // NON ORDINATO                                        non ho gli indici
+        // NON può contenere duplicati
+        // LUNGHEZZA VARIABILE                                aumenta e diminuisce inserendo o rimuovendo oggetti
+        HashSet<String> perifericsTypes = new HashSet<>();//possedute
+
+        for(Periferic p : periferics)
+            perifericsTypes.add(p.getType());
+
+        return perifericsTypes.contains("keyboard") && perifericsTypes.contains("mouse") && perifericsTypes.contains("monitor");
+    }
 
     
 }
